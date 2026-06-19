@@ -291,7 +291,7 @@ function initNeuralBackground() {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     renderer.setSize(window.innerWidth, window.innerHeight);
 
-    const particleCount = window.innerWidth < 768 ? 210 : 390;
+    const particleCount = window.innerWidth < 768 ? 420 : 780;
     const positions = new Float32Array(particleCount * 3);
     const colors = new Float32Array(particleCount * 3);
     const palette = [
@@ -389,6 +389,13 @@ function initGraph(data) {
         .backgroundColor('rgba(0,0,0,0)')
         .nodeId('id')
         .nodeVal(d => d.val)
+        // Görsel daire yarıçapı Math.sqrt(val) * 2.85 ile çiziliyor (aşağıdaki
+        // nodeCanvasObject içinde), ama kütüphanenin varsayılan tıklama/sürükleme
+        // alanı Math.sqrt(val) * 4 kullanıyor. Bu fark, küçük node'larda
+        // tıklanabilir alanların komşu node'ların üzerine taşmasına ve bazı
+        // tıklamaların yanlış node'a (veya hiçbirine) gitmesine yol açıyordu.
+        // Burada ikisini eşitliyoruz.
+        .nodeRelSize(2.85)
 
         .linkColor(link => {
             const source = typeof link.source === 'object' ? link.source : data.nodes.find(n => n.id === link.source);
@@ -398,7 +405,7 @@ function initGraph(data) {
             return link.label ? `${targetColor}cc` : `${sourceColor}99`;
         })
         .linkWidth(link => link.label ? 2.8 : 2)
-        .linkDirectionalParticles(link => link.label ? 5 : 3)
+        .linkDirectionalParticles(link => link.label ? 2 : 1)
         .linkDirectionalParticleSpeed(0.009)
         .linkDirectionalParticleWidth(link => link.label ? 3.4 : 2.6)
 
