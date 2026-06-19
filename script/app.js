@@ -144,8 +144,10 @@ function loadImage(url) {
     return img;
 }
 
-// Tüm resimleri önceden yükle
-graphData.nodes.forEach(n => { if (n.img) loadImage(n.img); });
+// Masaüstünde canvas çizimi için resimleri önceden yükle.
+if (!isAndroid) {
+    graphData.nodes.forEach(n => { if (n.img) loadImage(n.img); });
+}
 
 // ── DOM ───────────────────────────────────────────────────────
 const panel       = document.getElementById('detail-panel');
@@ -170,9 +172,13 @@ const cursorState = {
     trailTick: 0
 };
 
-initNeuralBackground();
-initGraph(graphData);
-initCosmicCursor();
+if (isAndroid) {
+    initAndroidMap(graphData);
+} else {
+    initNeuralBackground();
+    initGraph(graphData);
+    initCosmicCursor();
+}
 
 window.addEventListener('pointermove', event => {
     pointer.x = (event.clientX / window.innerWidth - 0.5) * 2;
@@ -224,6 +230,116 @@ function spawnCursorTrail(x, y) {
     dot.style.background = Math.random() > 0.55 ? '#fbbf24' : '#22d3ee';
     document.body.appendChild(dot);
     window.setTimeout(() => dot.remove(), 720);
+}
+
+function initAndroidMap(data) {
+    const container = document.getElementById('graph-container');
+    if (!container) return;
+
+    const headerText = document.querySelector('.main-header p');
+    if (headerText) {
+        headerText.textContent = 'Düğümlere dokunun; her noktada başka bir hikaye açın.';
+    }
+
+    const centerNode = data.nodes.find(node => node.group === 'merkez') || data.nodes[0];
+    const categories = data.nodes.filter(node => node.group === 'kategori');
+    const childrenByGroup = data.nodes.reduce((groups, node) => {
+        if (node.group !== 'merkez' && node.group !== 'kategori') {
+            if (!groups[node.group]) groups[node.group] = [];
+            groups[node.group].push(node);
+        }
+        return groups;
+    }, {});
+
+    const groupLabels = {
+        beceri: 'Beceriler',
+        proje: 'Projeler',
+        tutku: 'Tutkular'
+    };
+
+    container.innerHTML = '';
+
+    const map = document.createElement('div');
+    map.className = 'android-map';
+
+    if (centerNode) {
+        map.appendChild(createAndroidNodeButton(centerNode, 'android-node android-node-center'));
+        currentSelectedNode = centerNode;
+        updatePanelContent(centerNode);
+        panel.classList.remove('open');
+    }
+
+    const categoryRow = document.createElement('div');
+    categoryRow.className = 'android-category-row';
+    categories.forEach(node => {
+        categoryRow.appendChild(createAndroidNodeButton(node, 'android-node android-node-category'));
+    });
+    map.appendChild(categoryRow);
+
+    Object.keys(groupLabels).forEach(group => {
+        const nodes = childrenByGroup[group] || [];
+        if (!nodes.length) return;
+
+        const section = document.createElement('section');
+        section.className = 'android-node-section';
+
+        const title = document.createElement('h2');
+        title.textContent = groupLabels[group];
+        section.appendChild(title);
+
+        const grid = document.createElement('div');
+        grid.className = 'android-node-grid';
+        nodes.forEach(node => {
+            grid.appendChild(createAndroidNodeButton(node, 'android-node android-node-card'));
+        });
+
+        section.appendChild(grid);
+        map.appendChild(section);
+    });
+
+    container.appendChild(map);
+
+    openPanelBtn.textContent = 'Seçili Detayı Aç';
+}
+
+function createAndroidNodeButton(node, className) {
+    const color = groupColors[node.group] || '#38bdf8';
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = className;
+    button.style.setProperty('--node-color', color);
+
+    const avatar = document.createElement('span');
+    avatar.className = 'android-node-avatar';
+
+    if (node.img) {
+        const img = document.createElement('img');
+        img.src = node.img;
+        img.alt = '';
+        img.loading = 'lazy';
+        avatar.appendChild(img);
+    }
+
+    const text = document.createElement('span');
+    text.className = 'android-node-text';
+
+    const name = document.createElement('strong');
+    name.textContent = node.name;
+
+    const group = document.createElement('small');
+    group.textContent = node.group;
+
+    text.appendChild(name);
+    text.appendChild(group);
+    button.appendChild(avatar);
+    button.appendChild(text);
+
+    button.addEventListener('click', () => {
+        currentSelectedNode = node;
+        updatePanelContent(node);
+    });
+
+    return button;
 }
 
 // ── 3D ARKA PLAN ─────────────────────────────────────────────
