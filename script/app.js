@@ -1,10 +1,11 @@
 // ── RENK PALETİ ──────────────────────────────────────────────
 const groupColors = {
-    merkez:   '#4494ef',
-    kategori: '#3b82f6',
-    beceri:   '#10b981',
-    proje:    '#f59e0b',
-    tutku:    '#8b5cf6'
+    merkez:    '#4494ef',
+    kategori:  '#3b82f6',
+    beceri:    '#10b981',
+    altgrup:   '#34d399',
+    proje:     '#f59e0b',
+    tutku:     '#8b5cf6'
 };
 
 const graphData = {
@@ -20,6 +21,27 @@ const graphData = {
       "desc": "HTML, CSS, JavaScript, C# ve temel siber güvenlik tarafında kendimi geliştiriyorum. Amacım sadece kod yazmak değil; göze güzel gelen, çalışan ve mantığı sağlam projeler üretmek.",
       "img": "img/ytnk.png"
     },
+    // ── BECERİ ALT GRUPLARI ─────────────────────────────────────
+    {
+      "id": "BeceriBackend", "name": "Backend", "val": 16, "group": "altgrup",
+      "desc": "Sunucu tarafı mantık, veri yönetimi ve sistem altyapısı tarafında kendimi geliştirdiğim alan. C# ve genel programlama temellerim burada toplanıyor.",
+      "img": "img/csharp.png"
+    },
+    {
+      "id": "BeceriFrontend", "name": "Frontend", "val": 16, "group": "altgrup",
+      "desc": "Kullanıcının gördüğü ve etkileşime girdiği arayüz tarafı. HTML, CSS ve JavaScript ile göze hoş gelen, akıcı arayüzler kurduğum alan.",
+      "img": "img/htmlcss.png"
+    },
+    {
+      "id": "BeceriDiller", "name": "Güvenlik & Sistemler", "val": 16, "group": "altgrup",
+      "desc": "Siber güvenlik, sistem analizi ve ağ tarafında kendimi geliştirdiğim alan. Kontrollü ve meraklı bir şekilde öğrenmeye odaklanıyorum.",
+      "img": "img/kali.png"
+    },
+    {
+      "id": "HizliKavrama", "name": "Hızlı Kavrama", "val": 14, "group": "beceri",
+      "desc": "Yeni bir konuyu, aracı veya teknolojiyi kısa sürede kavrayıp pratiğe dökebiliyorum. Bilmediğim bir şeyle karşılaştığımda uzun süre takılmadan mantığını çözüp kullanmaya başlıyorum.",
+      "img": "img/ytnk.png"
+    },
     {
       "id": "Projeler", "name": "Projelerim", "val": 22, "group": "kategori",
       "desc": "Kendi çapımda geliştirdiğim web siteleri, bot sistemleri ve arayüz denemeleri burada toplanıyor. Her proje bana yeni bir şey öğretiyor; bazen tasarım, bazen backend mantığı, bazen de kullanıcı deneyimi.",
@@ -32,23 +54,23 @@ const graphData = {
       "img": "img/sbr.png"
     },
     {
-      "id": "JS", "name": "JavaScript (Node.js)", "val": 16, "group": "beceri",
+      "id": "JS", "name": "JavaScript (Node.js)", "val": 13, "group": "beceri",
       "desc": "JavaScript ve Node.js ile özellikle Discord bot mantıkları, dinamik web özellikleri ve küçük otomasyonlar geliştiriyorum. Kodun arka tarafta nasıl çalıştığını görmek ve onu kullanıcıya düzgün yansıtmak hoşuma gidiyor.",
       "img": "img/js.jpg"
     },
     {
-      "id": "Frontend", "name": "Frontend (HTML/CSS)", "val": 14, "group": "beceri",
+      "id": "Frontend", "name": "Frontend (HTML/CSS)", "val": 11, "group": "beceri",
       "desc": "Frontend tarafında HTML, CSS ve JavaScript ile göze güzel gelen, responsive ve canlı arayüzler yapmayı seviyorum. Bu alanda amacım sadece sayfa kurmak değil; siteye giren kişinin ilk anda tasarımı hissetmesi.",
       "img": "img/htmlcss.png",
       "panelImg": "img/htmlcss.png"
     },
     {
-      "id": "CSharp", "name": "C# & Programlama", "val": 14, "group": "beceri",
+      "id": "CSharp", "name": "C# & Programlama", "val": 13, "group": "beceri",
       "desc": "C# ile programlama temellerimi, algoritma mantığımı ve nesne yönelimli düşünme becerimi geliştiriyorum. Bilgisayar mühendisliği okurken bu temel benim için önemli bir iskelet gibi.",
       "img": "img/csharp.png"
     },
     {
-      "id": "Cyber", "name": "Siber Güvenlik & Pentest", "val": 14, "group": "beceri",
+      "id": "Cyber", "name": "Siber Güvenlik & Pentest", "val": 11, "group": "beceri",
       "desc": "Siber güvenlik tarafında ağ tarama, temel pentest mantığı, Kali Linux araçları ve sistemlerin nasıl çalıştığını anlama konuları ilgimi çekiyor. Bu alanı merak ederek ve kontrollü şekilde öğreniyorum.",
       "img": "img/kali.png",
       "panelImg": "img/kali.png"
@@ -99,10 +121,14 @@ const graphData = {
     { "source": "Merkez", "target": "Beceriler" },
     { "source": "Merkez", "target": "Projeler" },
     { "source": "Merkez", "target": "Tutkular" },
-    { "source": "Beceriler", "target": "JS" },
-    { "source": "Beceriler", "target": "Frontend" },
-    { "source": "Beceriler", "target": "CSharp" },
-    { "source": "Beceriler", "target": "Cyber" },
+    { "source": "Beceriler", "target": "BeceriBackend" },
+    { "source": "Beceriler", "target": "BeceriFrontend" },
+    { "source": "Beceriler", "target": "BeceriDiller" },
+    { "source": "Beceriler", "target": "HizliKavrama" },
+    { "source": "BeceriBackend", "target": "CSharp" },
+    { "source": "BeceriFrontend", "target": "JS" },
+    { "source": "BeceriFrontend", "target": "Frontend" },
+    { "source": "BeceriDiller", "target": "Cyber" },
     { "source": "Projeler", "target": "ValthrionBot" },
     { "source": "Projeler", "target": "PortfolioWeb" },
     // ── YENİ EKLENEN PROJE BAĞLANTISI ───────────────────────────
@@ -125,17 +151,35 @@ const categoryAnchors = {
     Tutkular: { x: 0, y: 245 }
 };
 
-const categoryByGroup = {
-    beceri: 'Beceriler',
-    proje: 'Projeler',
-    tutku: 'Tutkular'
+// Düğümün ait olduğu ana kategori (kök düğümler hariç her node burada).
+const parentOf = {
+    BeceriBackend: 'Beceriler',
+    BeceriFrontend: 'Beceriler',
+    BeceriDiller: 'Beceriler',
+    HizliKavrama: 'Beceriler',
+    CSharp: 'BeceriBackend',
+    JS: 'BeceriFrontend',
+    Frontend: 'BeceriFrontend',
+    Cyber: 'BeceriDiller',
+    ValthrionBot: 'Projeler',
+    PortfolioWeb: 'Projeler',
+    CryptoTerminal: 'Projeler',
+    Gaming: 'Tutkular',
+    Hardware: 'Tutkular',
+    CS2: 'Gaming',
+    FiveM: 'Gaming'
 };
 
+// Her düğümün kendi ebeveynine göre konum sapması (kümede dağılım için).
 const nodeOffsets = {
-    JS: { x: -52, y: -82 },
-    Frontend: { x: 78, y: -58 },
-    CSharp: { x: -88, y: 72 },
-    Cyber: { x: 84, y: 86 },
+    BeceriBackend: { x: -96, y: -34 },
+    BeceriFrontend: { x: 18, y: -100 },
+    BeceriDiller: { x: 104, y: -28 },
+    HizliKavrama: { x: 4, y: 108 },
+    CSharp: { x: -34, y: 78 },
+    JS: { x: -58, y: -76 },
+    Frontend: { x: 58, y: -76 },
+    Cyber: { x: 36, y: 78 },
     ValthrionBot: { x: -78, y: -72 },
     PortfolioWeb: { x: 84, y: -54 },
     CryptoTerminal: { x: 8, y: 94 },
@@ -145,17 +189,30 @@ const nodeOffsets = {
     FiveM: { x: 36, y: 98 }
 };
 
+// Bir düğümün konumunu, ebeveyn zincirini takip ederek hesaplar.
+// Böylece merkez -> kategori -> altgrup -> beceri gibi her derinlikte çalışır.
 function getClusterTarget(node) {
     if (node.group === 'merkez') return categoryAnchors.merkez;
     if (node.group === 'kategori') return categoryAnchors[node.id] || { x: 0, y: 0 };
 
-    const categoryId = categoryByGroup[node.group];
-    const anchor = categoryAnchors[categoryId] || { x: 0, y: 0 };
+    const parentId = parentOf[node.id];
     const offset = nodeOffsets[node.id] || { x: 0, y: 0 };
 
+    if (!parentId) return offset;
+
+    // Ebeveyn bir ana kategori mi (anchor'da var) yoksa bir alt grup mu?
+    const parentAnchor = categoryAnchors[parentId];
+    if (parentAnchor) {
+        return { x: parentAnchor.x + offset.x, y: parentAnchor.y + offset.y };
+    }
+
+    const grandParentId = parentOf[parentId];
+    const grandAnchor = categoryAnchors[grandParentId] || { x: 0, y: 0 };
+    const parentOffset = nodeOffsets[parentId] || { x: 0, y: 0 };
+
     return {
-        x: anchor.x + offset.x,
-        y: anchor.y + offset.y
+        x: grandAnchor.x + parentOffset.x + offset.x,
+        y: grandAnchor.y + parentOffset.y + offset.y
     };
 }
 
@@ -600,7 +657,11 @@ function initGraph(data) {
             graph.zoom(Math.max(graph.zoom(), 2.45), 700);
         });
 
-    graph.d3Force('charge').strength(node => node.group === 'kategori' ? -520 : -245);
+    graph.d3Force('charge').strength(node => {
+        if (node.group === 'kategori') return -520;
+        if (node.group === 'altgrup') return -340;
+        return -245;
+    });
     graph.d3Force('link').distance(link => link.label ? 96 : 82);
     graph.d3Force('cluster', categoryClusterForce(window.innerWidth < 768 ? 0.19 : 0.13));
 
