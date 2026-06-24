@@ -261,6 +261,18 @@ const panelAvatar = document.getElementById('panel-avatar');
 const panelAvatarWrap = document.getElementById('panel-avatar-wrap');
 const panelShowcase = document.getElementById('panel-showcase');
 
+function openPanel() {
+    if (currentSelectedNode) updatePanelContent(currentSelectedNode);
+    panel.classList.add('open');
+}
+
+function closePanel() {
+    panel.classList.remove('open');
+}
+
+closeBtn?.addEventListener('click', closePanel);
+openPanelBtn?.addEventListener('click', openPanel);
+
 let graph;
 let currentSelectedNode = null;
 let pulseAngle = 0; // merkez animasyonu için
